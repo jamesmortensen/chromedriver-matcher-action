@@ -1,0 +1,30 @@
+name: 'Chrome/Chromedriver Matcher Action'
+description: 'When installing Chromedriver via npm, it may not be a compatible version with the one on the GitHub Action runner. This ensures the correct chromedriver version is installed via npm to be compatible with the runner\s Google Chrome version'
+author: 'James Mortensen'
+runs:
+  using: 'composite'
+  steps:
+  - name: Validate runner and inputs
+    shell: bash
+    run: |
+      if [[ "${RUNNER_OS}" != 'Linux' ]] && [[ "${RUNNER_OS}" != 'macOS' ]]; then
+        echo "${RUNNER_OS} is not supported. Only Linux is supported at this time."
+        exit 1
+      fi
+      
+  - name: Make sure chromedriver and the runner's Google Chrome version are compatible
+    shell: bash
+    working-directory: ${{ env.GITHUB_ACTION_REPOSITORY }}
+    run: |
+      pwd
+      CHROME_MAJOR_VERSION=$(google-chrome --version | sed -E "s/.* ([0-9]+)(\.[0-9]+){3}.*/\1/")
+      CHROMEDRIVER_VERSION=$(./node_modules/.bin/chromedriver --version | awk '{print $2}' | sed -E "s/\..*//g")
+      echo "google chrome version is $CHROME_MAJOR_VERSION"
+      echo "chromedriver version is $CHROMEDRIVER_VERSION"
+      if [ "$CHROMEDRIVER_VERSION" != "$CHROME_MAJOR_VERSION" ]; then
+        echo "versions not compatible. Reinstalling chromedriver using version $CHROME_MAJOR_VERSION"
+        npm i chromedriver@$CHROME_MAJOR_VERSION
+      else
+        echo "versions match. Moving onto the next steps..."
+      fi
+      
