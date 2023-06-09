@@ -14,6 +14,6 @@ jobs:
     if: ${{ github.event_name == 'push' }}
     uses: jamesmortensen/chromedriver-action-tester/.github/workflows/chrome.yml@main
   
-  test_wd:
-    if: ${{ github.event_name == 'workflow_dispatch' }}
-    uses: jamesmortensen/chromedriver-action-tester/.github/workflows/chrome.yml@${{ inputs.version }}
+  # test_wd:
+  #   if: ${{ github.event_name == 'workflow_dispatch'
+  #   uses: jamesmortensen/chromedriver-action-tester/.github/workflows/chrome.yml@${{ inputs.version }}
