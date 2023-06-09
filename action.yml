@@ -1,5 +1,5 @@
 name: 'Chrome/Chromedriver Matcher Action'
-description: 'When installing Chromedriver via npm, it may not be a compatible version with the one on the GitHub Action runner. This ensures the correct chromedriver version is installed via npm to be compatible with the runner\s Google Chrome version'
+description: 'When installing Chromedriver via npm, it may not be a compatible version with the one on the GitHub Action runner. This ensures the correct chromedriver version is installed via npm to be compatible with the runner Google Chrome version'
 author: 'James Mortensen'
 runs:
   using: 'composite'
