@@ -1,19 +1,34 @@
-name: Test
+name: Chromedriver
 
 on:
   push:
   workflow_dispatch:
-    inputs:
-      version:
-        description: 'Version to test'
-        required: false
-        default: 'main'
 
 jobs:
-  test:
-    if: ${{ github.event_name == 'push' }}
-    uses: jamesmortensen/chromedriver-action-tester/.github/workflows/chrome.yml@main
-  
-  # test_wd:
-  #   if: ${{ github.event_name == 'workflow_dispatch'
-  #   uses: jamesmortensen/chromedriver-action-tester/.github/workflows/chrome.yml@${{ inputs.version }}
+  deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+        chromedriver-version: [106, 108]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set system state as defaulting to chromedriver ${{ matrix.chromedriver-version }}
+        run: |
+          npm install chromedriver@${{ matrix.chromedriver-version }}
+          rm -rf node_modules/
+
+      - name: Debug and install node_modules
+        run: |
+          echo $GITHUB_ACTION_WORKSPACE
+          echo $GITHUB_WORKSPACE
+          ls -ltrSha .
+          ls -ltrSha $GITHUB_WORKSPACE/
+          npm install
+
+      - name: Check versions
+        uses: ./action.yml
+
+      - name: Check chromedriver version
+        run: npx chromedriver --version
+
