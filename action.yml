@@ -1,6 +1,9 @@
 name: 'Chrome/Chromedriver Matcher Action'
 description: 'Checks the Chrome version and chromedriver version and installs a chromedriver compatible with that version of Chrome.'
 author: 'James Mortensen'
+branding:
+  icon: 'box'
+  color: 'yellow'
 runs:
   using: 'composite'
   steps:
