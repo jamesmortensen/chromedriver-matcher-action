@@ -1,4 +1,4 @@
-name: Chromedriver
+name: Test
 
 on:
   push:
@@ -15,6 +15,9 @@ jobs:
       - uses: actions/checkout@v3
       - name: Set system state as defaulting to chromedriver ${{ matrix.chromedriver-version }}
         run: |
+          mkdir -p .github/workflows/tmp
+          cd .github/workflows/tmp
+          npm init -y
           npm install chromedriver@${{ matrix.chromedriver-version }}
           rm -rf node_modules/
 
