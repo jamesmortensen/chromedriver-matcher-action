@@ -27,7 +27,7 @@ jobs:
           npm install
 
       - name: Check versions
-        uses: action.yml
+        uses: ./action.yml
 
       - name: Check chromedriver version
         run: npx chromedriver --version
