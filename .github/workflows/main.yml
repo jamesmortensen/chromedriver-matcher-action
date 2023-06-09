@@ -27,6 +27,7 @@ jobs:
           echo $GITHUB_WORKSPACE
           ls -ltrSha .
           ls -ltrSha $GITHUB_WORKSPACE/
+          cd .github/workflows/tmp
           npm install
 
       - name: Check versions
